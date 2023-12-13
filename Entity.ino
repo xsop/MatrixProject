@@ -59,10 +59,13 @@ Enemy::Enemy(byte x, byte y) {
     blinkInterval = enemyBlinkInterval;
 }
 
-void Enemy::update() {
-    blink();
-    isOnSameSpot();
-    pathfind();
+Enemy& Enemy::operator=(const Enemy& other) {
+    x = other.x;
+    y = other.y;
+    visible = other.visible;
+    blinkInterval = other.blinkInterval;
+    lastBlink = other.lastBlink;
+    return *this;
 }
 
 void Enemy::moveEnemy(byte x, byte y) {
@@ -157,13 +160,15 @@ bool Enemy::isOutOfBounds(byte x, byte y) const {
 
 bool Enemy::isOnSameSpot() const {
     if(player.getX() == x && player.getY() == y) {
-        isInGame = false;
-        matrix.setupMatrix();
-        isInGameOver = true;
-        display.printGameOver();
+        
         return true;
     }
     return false;
+}
+
+void Enemy::setVisible(bool visible) {
+    this->visible = visible;
+    matrix.setLed(x, y, visible, false);
 }
 
 Bomb::Bomb() {

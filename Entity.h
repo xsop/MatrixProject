@@ -28,7 +28,7 @@ public:
 class Enemy : public Entity {
 public:
     Enemy(byte x, byte y);
-    void update();
+    Enemy& operator=(const Enemy& other);
 
     void moveEnemy(byte x, byte y);
     bool checkDirection(byte x, byte y);
@@ -36,6 +36,8 @@ public:
 
     bool isOutOfBounds(byte x, byte y) const;
     bool isOnSameSpot() const;
+
+    void setVisible(bool visible);
     
     long getLastMove() const { return lastMove; }
     void setLastMove(long lastMove) { this->lastMove = lastMove; }
@@ -46,7 +48,12 @@ public:
     byte getRandomDirection() const { return randomDirection; }
     void setRandomDirection(byte randomDirection) { this->randomDirection = randomDirection; }
 
+    bool isAlive() const { return alive; }
+    void setAlive(bool alive) { this->alive = alive; }
+
 private:
+    bool alive = 1;
+
     byte randomDirection;
     byte randomChanceChangeDirection = 10;
 
@@ -60,6 +67,8 @@ public:
     Bomb& operator=(const Bomb& other);
     bool timerRanOut() const { return (millis() - timePlaced) > bombTimer; }
     bool exploded();
+
+    unsigned long getExplosionStart() const { return explosionStart; }
 private:
     unsigned long timePlaced;
     unsigned long explosionStart = 0;    
