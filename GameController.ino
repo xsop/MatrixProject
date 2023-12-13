@@ -20,7 +20,7 @@ void Controller::updateMenu() {
     display.lcd.blink();
     storeJoystickValues();
     if(isNextMoveAvailable(adaptiveMenuDelay) && menuSwitch != 5) {
-        moveMenu();
+        moveMenu(maxPos);
     }
     if(getJoystickButtonRead() != lastJoystickButtonState) {
         if(millis() - lastDebounceTime > debounceDelay) {
@@ -39,7 +39,7 @@ void Controller::updateMenu() {
                 if(currentValue < maxInput){
                     currentValue++;
                     changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * 0.5, 100);
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
                 }
             
             }
@@ -47,7 +47,55 @@ void Controller::updateMenu() {
                 if(currentValue > minInput){
                     currentValue--;
                     changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * 0.5, 100);
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            }
+            else{
+                adaptiveMenuDelay = menuDelay;
+            }
+            lastMove = millis();
+        }
+    }
+
+    else if(menuSwitch == 1){
+        if(isNextMoveAvailable(adaptiveMenuDelay)){
+            if(getDirection() == RIGHT_DIRECTION){
+                if(currentValue < maxHighscores){
+                    currentValue++;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            
+            }
+            else if(getDirection() == LEFT_DIRECTION){
+                if(currentValue > 0){
+                    currentValue--;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            }
+            else{
+                adaptiveMenuDelay = menuDelay;
+            }
+            lastMove = millis();
+        }
+    }
+
+    else if(menuSwitch == 3){
+        if(isNextMoveAvailable(adaptiveMenuDelay)){
+            if(getDirection() == RIGHT_DIRECTION){
+                if(currentValue < aboutTextLength - 1 - 16){
+                    currentValue++;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            
+            }
+            else if(getDirection() == LEFT_DIRECTION){
+                if(currentValue > minInput){
+                    currentValue--;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
                 }
             }
             else{
@@ -58,19 +106,20 @@ void Controller::updateMenu() {
     }
 }
 
-void Controller::moveMenu(){
+
+void Controller::moveMenu(byte maxPos){
     int direction = getDirection();
     switch (direction) {
     case UP_DIRECTION:
         if(cursorPos == 1){
             cursorPos = 0;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * 0.5, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
         }
         else if(pagePos > 0){
             pagePos --;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * 0.5, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
             changePrint = true;
         }
         break;
@@ -79,16 +128,19 @@ void Controller::moveMenu(){
         if(cursorPos == 0){
             cursorPos = 1;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * 0.5, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
         }
-        else if(pagePos < 3){
+        else if(pagePos < maxPos){
             pagePos++;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * 0.5, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
             changePrint = true;
         }
         break;
-
+    case LEFT_DIRECTION:
+        break;
+    case RIGHT_DIRECTION:
+        break;
     default:
         adaptiveMenuDelay = menuDelay;
         break;

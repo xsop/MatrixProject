@@ -13,7 +13,7 @@ bool changePrint = true;
 // bool isInValueInput = false;
 
 byte menuSwitch = 0;
-
+byte maxPos = 3;
 byte currentValue = 0;
 bool isInGameOver = false;
 

@@ -28,6 +28,11 @@ Enemy enemy[numEnemies] = {
     Enemy(7, 7)
 };
 
+bool soundEnabled = true;
+
+char* aboutText = "by Stefan Paun: github.com/xsop";
+byte aboutTextLength = 32;
+
 void endGame();
 void fullMatrixOn();
 void startGame();

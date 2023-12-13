@@ -24,14 +24,30 @@ void Display::printMainMenu() {
     lcd.print(mainMenuTitles[pagePos + 1]);
 }
 
-char* settingsTitles[5] = {"LCD Brightness", "Matrix Brightness", "Sound: ON", "Reset highscore", "Back"};
+char* highscores[3] = {"xop - 342", "top - 122", "pox - 1"};
+
+void Display::printHighscores() {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(highscores[currentValue]);
+    lcd.setCursor(0, 1);
+    lcd.print("Back");
+}
+
+char* settingsTitles[5] = {"LCD Brightness", "Matrix Brightness", "Sound: ", "Reset highscore", "Back"};
 
 void Display::printSettings() {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(settingsTitles[pagePos]);
+    if(pagePos == 2){
+        lcd.print(soundEnabled ? "On" : "Off");
+    }
     lcd.setCursor(0, 1);
     lcd.print(settingsTitles[pagePos + 1]);
+    if(pagePos + 1 == 2){
+        lcd.print(soundEnabled ? "On" : "Off");
+    }
 }
 
 void Display::printAbout(){
@@ -39,7 +55,7 @@ void Display::printAbout(){
     lcd.setCursor(0, 0);
     lcd.print("BOMBERMAN");
     lcd.setCursor(0, 1);
-    lcd.print("github.com/xsop");
+    lcd.print(aboutText + currentValue);
 }
 
 void Display::printValueInput(){

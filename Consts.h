@@ -36,10 +36,12 @@ const int joystickMinCenterThreshold = 300;
 const int joystickMaxCenterThreshold = 700;
 
 const int moveDelay = 100;
-const int menuDelay = 500;
+const int menuDelay = 350;
 
 int adaptiveMoveDelay = 100;
-int adaptiveMenuDelay = 500;
+int adaptiveMenuDelay = 350;
+
+float adaptiveMoveDelayMultiplier = 0.7;
 
 const int debounceDelay = 50;
 
@@ -55,6 +57,8 @@ int LCDBrightness = 255;
 
 const byte minInput = 0;
 const byte maxInput = 15;
+
+const byte maxHighscores = 3 - 1;
 
 const int matrixBrightnessAddress = 321;
 const int LCDBrightnessAddress = 896;

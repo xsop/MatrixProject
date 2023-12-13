@@ -31,6 +31,7 @@ void loop() {
             //bad practice, prevents clicking both exit and play
             while(controller.getJoystickButtonRead() == LOW){
                 menuSwitch = 0;
+                maxPos = 3;
                 isInGameOver = false;
                 cursorPos = 0;
                 pagePos = 0;

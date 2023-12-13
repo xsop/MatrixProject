@@ -9,6 +9,7 @@ public:
     Display();
     void printIntro();
     void printMainMenu();
+    void printHighscores();
     void printSettings();
     void printAbout();
     void printValueInput();

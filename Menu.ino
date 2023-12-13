@@ -1,17 +1,26 @@
 #include "Menu.h"
 
 void menu(){
+
     byte index = cursorPos + pagePos;
     if(menuSwitch == 0){
         if(index == 0){
             startGame();
             isInGame = true;
         }
-        if(index == 2){ //settings
+        else if(index == 1){ //highscores
+            changePrint = true;
+            menuSwitch = 1;
+            cursorPos = 0;
+            pagePos = 0;
+            maxPos = 0;
+        }
+        else if(index == 2){ //settings
             changePrint = true;
             menuSwitch = 2;
             cursorPos = 0;
             pagePos = 0;
+            maxPos = 3;
         }
         else if(index == 3){ //about
             changePrint = true;
@@ -19,6 +28,16 @@ void menu(){
             cursorPos = 0;
             pagePos = 0;
         }
+    }
+    else if(menuSwitch == 1){
+        if(index == 1){
+            changePrint = true;
+            menuSwitch = 0;
+            maxPos = 3;
+            cursorPos = 0;
+            pagePos = 0;
+        }
+        
     }
     else if(menuSwitch == 2){
         if(index == 0 || index == 1){
@@ -31,9 +50,14 @@ void menu(){
             changePrint = true;
             menuSwitch = 5;
         }
+        else if(index == 2){
+            changePrint = true;
+            soundEnabled = !soundEnabled;
+        }
         else if(index == 4){
             changePrint = true;
             menuSwitch = 0;
+            maxPos = 3;
             cursorPos = 0;
             pagePos = 0;
         }
@@ -41,6 +65,7 @@ void menu(){
     else if(menuSwitch == 3){
         changePrint = true;
         menuSwitch = 0;
+        maxPos = 3;
         cursorPos = 0;
         pagePos = 0;
     }
@@ -64,17 +89,19 @@ void menuUpdate(){
         if(menuSwitch == 0){
             display.printMainMenu();
         }
-        if(menuSwitch == 2){
+        else if(menuSwitch == 1){
+            display.printHighscores();
+        }
+        else if(menuSwitch == 2){
             display.printSettings();
         }
-        if(menuSwitch == 3){
+        else if(menuSwitch == 3){
             display.printAbout();
         }
-        if(menuSwitch == 5){
+        else if(menuSwitch == 5){
             display.printValueInput();
         }
 
         changePrint = false;
     }
-    Serial.println(menuSwitch);
 }

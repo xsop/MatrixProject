@@ -25,7 +25,7 @@ class Controller {
         void storeJoystickValues();
         void handleButton();
         
-        void moveMenu();
+        void moveMenu(byte maxPos);
         void movePlayer();
 
         bool isNextMoveAvailable(int delay) const;
