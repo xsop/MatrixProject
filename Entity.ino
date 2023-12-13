@@ -52,11 +52,17 @@ bool Player::isOutOfBounds(byte x, byte y) const {
     return false;
 }
 
-Enemy::Enemy() {
-    x = 7;
-    y = 7;
+Enemy::Enemy(byte x, byte y) {
+    this->x = x;
+    this->y = y;
     visible = true;
     blinkInterval = enemyBlinkInterval;
+}
+
+void Enemy::update() {
+    blink();
+    isOnSameSpot();
+    pathfind();
 }
 
 void Enemy::moveEnemy(byte x, byte y) {
@@ -75,61 +81,64 @@ void Enemy::moveEnemy(byte x, byte y) {
     this->y = y;
 
     matrix.setLed(this->x, this->y, true, false);
-    
-    //lastBlink = millis(); // reset blink timer for consistent first blink
 }
 
-void Enemy::pathfinding(){
-    if(lastMove + moveInterval < millis()) {
+bool Enemy::checkDirection(byte x, byte y){
+    if(isOutOfBounds(x, y)){
+        randomDirection = random(4);
+        return false;
+    }
+    if(gameMap.isObstacle(x, y)){
+        randomDirection = random(4);
+        return false;
+    }
+    if(bomb != nullptr) {
+        int xBomb = bomb->getX();
+        int yBomb = bomb->getY();
+        if(x == xBomb && y == yBomb) {
+            randomDirection = random(4);
+            return false;
+        }
+    }
+    return true;
+}
+
+void Enemy::pathfind(){
+    if(millis() - moveInterval > lastMove) {
         
         randomChanceChangeDirection = random(100);
         if(randomChanceChangeDirection < 10) {
             randomDirection = random(4);
         }
+
         switch(randomDirection) {
             case 0:
-                if(isOutOfBounds(x, y - 1)){
-                    randomDirection = random(4);
-                    return;
-                }
-                if(gameMap.isObstacle(x, y - 1)){
+                if(!checkDirection(x, y - 1)) {
                     randomDirection = random(4);
                     return;
                 }
                 moveEnemy(x, y - 1);
                 break;
             case 1:
-                if(isOutOfBounds(x + 1, y)){
-                    randomDirection = random(4);
-                    return;
-                }
-                if(gameMap.isObstacle(x + 1, y)){
-                    randomDirection = random(4);
-                    return;
-                }
-                moveEnemy(x + 1, y);
-                break;
-            case 2:
-                if(isOutOfBounds(x, y + 1)){
-                    randomDirection = random(4);
-                    return;
-                }
-                if(gameMap.isObstacle(x, y + 1)){
+                if(!checkDirection(x, y + 1)) {
                     randomDirection = random(4);
                     return;
                 }
                 moveEnemy(x, y + 1);
                 break;
-            case 3:
-                if(isOutOfBounds(x - 1, y)){
-                    randomDirection = random(4);
-                    return;
-                }
-                if(gameMap.isObstacle(x - 1, y)){
+            case 2:
+                if(!checkDirection(x - 1, y)) {
                     randomDirection = random(4);
                     return;
                 }
                 moveEnemy(x - 1, y);
+                break;
+            case 3:
+                if(!checkDirection(x + 1, y)) {
+                    randomDirection = random(4);
+                    return;
+                }
+                moveEnemy(x + 1, y);
                 break;
         }
         lastMove = millis();

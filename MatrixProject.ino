@@ -24,7 +24,6 @@ void loop() {
 
     if(isInGame){
         updateGame();
-        
     }
     else{
         if(isInGameOver){

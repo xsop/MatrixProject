@@ -11,13 +11,10 @@
 
 Matrix matrix;
 Player player;
-Enemy enemy;
+
 Controller controller;
 GameMap gameMap;
 Display display;
-
-int randomChanceChangeDirection;
-int randomDirection;
 
 void fullMatrixOn();
 void startGame();

@@ -8,6 +8,10 @@ void fullMatrixOn() {
     }
 }
 
+Enemy enemy[1] = {
+    Enemy(7, 7)
+};
+
 void startGame() {
     //make the whole matrix red with delay
     fullMatrixOn();
@@ -21,14 +25,17 @@ void startGame() {
     // needed to make a new game map
     randomSeed(analogRead(unusedPin));
     gameMap.generate();
-    randomDirection = random(4);
+    for(int i = 0; i < 1; i++) {
+        enemy[i].moveEnemy(7 - i,7 - i);
+        enemy[i].setRandomDirection(random(4));
+    }
 }
 
 void updateGame() {
     player.blink();
-    enemy.blink();
-    enemy.isOnSameSpot();
-    enemy.pathfinding();
+    for(int i = 0; i < 1; i++){
+        enemy[i].update();
+    }
     display.printInGame();
     controller.update();
     gameMap.update();

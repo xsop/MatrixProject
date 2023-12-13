@@ -27,10 +27,13 @@ public:
 
 class Enemy : public Entity {
 public:
-    Enemy();
+    Enemy(byte x, byte y);
+    void update();
+
     void moveEnemy(byte x, byte y);
-    void pathfinding();
-    
+    bool checkDirection(byte x, byte y);
+    void pathfind();
+
     bool isOutOfBounds(byte x, byte y) const;
     bool isOnSameSpot() const;
     
@@ -40,7 +43,13 @@ public:
     long getMoveInterval() const { return moveInterval; }
     void setMoveInterval(long moveInterval) { this->moveInterval = moveInterval; }
 
+    byte getRandomDirection() const { return randomDirection; }
+    void setRandomDirection(byte randomDirection) { this->randomDirection = randomDirection; }
+
 private:
+    byte randomDirection;
+    byte randomChanceChangeDirection = 10;
+
     unsigned long moveInterval = 500;
     unsigned long lastMove = 0;
 };

@@ -20,7 +20,7 @@ const int playerStartY = 0;
 
 const int bombBlinkInterval = 200;
 const int playerBlinkInterval = 500;
-const int enemyBlinkInterval = 50;
+const int enemyBlinkInterval = 300;
 const int collisionBlinkInterval = 100;
 const int introDuration = 1000;
 
