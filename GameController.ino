@@ -106,7 +106,6 @@ void Controller::updateMenu() {
     }
 }
 
-
 void Controller::moveMenu(byte maxPos){
     int direction = getDirection();
     switch (direction) {

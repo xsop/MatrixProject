@@ -62,3 +62,5 @@ const byte maxHighscores = 3 - 1;
 
 const int matrixBrightnessAddress = 321;
 const int LCDBrightnessAddress = 896;
+
+const int maxScorePerEnemy = 1000;

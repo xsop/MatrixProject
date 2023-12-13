@@ -14,6 +14,7 @@ void menu(){
             cursorPos = 0;
             pagePos = 0;
             maxPos = 0;
+            currentValue = 0;
         }
         else if(index == 2){ //settings
             changePrint = true;
@@ -21,12 +22,14 @@ void menu(){
             cursorPos = 0;
             pagePos = 0;
             maxPos = 3;
+            currentValue = 0;
         }
         else if(index == 3){ //about
             changePrint = true;
             menuSwitch = 3;
             cursorPos = 0;
             pagePos = 0;
+            currentValue = 0;
         }
     }
     else if(menuSwitch == 1){
@@ -36,6 +39,7 @@ void menu(){
             maxPos = 3;
             cursorPos = 0;
             pagePos = 0;
+            currentValue = 0;
         }
         
     }
@@ -60,6 +64,7 @@ void menu(){
             maxPos = 3;
             cursorPos = 0;
             pagePos = 0;
+            currentValue = 0;
         }
     }
     else if(menuSwitch == 3){
@@ -68,6 +73,7 @@ void menu(){
         maxPos = 3;
         cursorPos = 0;
         pagePos = 0;
+        currentValue = 0;
     }
     else if(menuSwitch == 5){
         changePrint = true;
@@ -80,6 +86,7 @@ void menu(){
         }
         cursorPos = 0;
         pagePos = 0;
+        currentValue = 0;
     }
 }
 

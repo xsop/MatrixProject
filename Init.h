@@ -33,6 +33,9 @@ bool soundEnabled = true;
 char* aboutText = "by Stefan Paun: github.com/xsop";
 byte aboutTextLength = 32;
 
+int currentScore = 0;
+unsigned long startGameTime = 0;
+
 void endGame();
 void fullMatrixOn();
 void startGame();

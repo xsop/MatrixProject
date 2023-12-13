@@ -33,16 +33,20 @@ void startGame() {
         enemy[i] = Enemy(7 - i,7 - i);
         enemy[i].setRandomDirection(random(4));
     }
+
+    currentScore = 0;
+
+    startGameTime = millis();
 }
 
 void enemiesHandler(){
-    Serial.print(enemy[0].getX());
-    Serial.print(" ");
-    Serial.print(enemy[0].getY());
-    Serial.print(" - ");
-    Serial.print(enemy[1].getX());
-    Serial.print(" ");
-    Serial.println(enemy[1].getY());
+    // Serial.print(enemy[0].getX());
+    // Serial.print(" ");
+    // Serial.print(enemy[0].getY());
+    // Serial.print(" - ");
+    // Serial.print(enemy[1].getX());
+    // Serial.print(" ");
+    // Serial.println(enemy[1].getY());
 
     if(enemiesKilled == numEnemies){
         endGame();
@@ -74,6 +78,7 @@ void enemiesHandler(){
             (bombX == enemyX && bombY > enemyY - explosionRadius && bombY < enemyY + explosionRadius)||
             (bombY == enemyY && bombX > enemyX - explosionRadius && bombX < enemyX + explosionRadius)){
                 enemy[i].setAlive(false);
+                currentScore += maxScorePerEnemy - min(maxScorePerEnemy, map((millis() - startGameTime), 0, 120000, 0, maxScorePerEnemy));
                 enemiesKilled++;
                 continue;
             }
@@ -94,7 +99,6 @@ void enemiesHandler(){
 
 
 void updateGame() {
-
     player.blink();
     enemiesHandler();
     display.printInGame();
