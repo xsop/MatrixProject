@@ -57,8 +57,8 @@ void Display::printGameOver(){
 
 void Display::printInGame(){
     lcd.setCursor(0, 0);
-    lcd.print("Dots left: ");
-    lcd.print(matrix.getMemoryCounter());
+    lcd.print("Enemies left: ");
+    lcd.print(numEnemies - enemiesKilled);
     lcd.setCursor(0, 1);
     lcd.print("           ");
 }

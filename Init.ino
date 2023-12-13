@@ -1,5 +1,13 @@
 #include "Init.h"
 
+void endGame() {
+    isInGame = false;
+    matrix.setupMatrix();
+    isInGameOver = true;
+    display.printGameOver();
+    enemiesKilled = 0;
+}
+
 void fullMatrixOn() {
     for(int i = 0; i < matrix.getMatrixSize(); i++) {
         for(int j = 0; j < matrix.getMatrixSize(); j++) {
@@ -22,12 +30,24 @@ void startGame() {
     randomSeed(analogRead(unusedPin));
     gameMap.generate();
     for(int i = 0; i < numEnemies; i++) {
-        enemy[i].moveEnemy(7 - i,7 - i);
+        enemy[i] = Enemy(7 - i,7 - i);
         enemy[i].setRandomDirection(random(4));
     }
 }
 
 void enemiesHandler(){
+    Serial.print(enemy[0].getX());
+    Serial.print(" ");
+    Serial.print(enemy[0].getY());
+    Serial.print(" - ");
+    Serial.print(enemy[1].getX());
+    Serial.print(" ");
+    Serial.println(enemy[1].getY());
+
+    if(enemiesKilled == numEnemies){
+        endGame();
+    }
+
     if(millis() - blinkTimer >= blinkInterval) {
         blinkTimer = millis();
 
@@ -54,14 +74,12 @@ void enemiesHandler(){
             (bombX == enemyX && bombY > enemyY - explosionRadius && bombY < enemyY + explosionRadius)||
             (bombY == enemyY && bombX > enemyX - explosionRadius && bombX < enemyX + explosionRadius)){
                 enemy[i].setAlive(false);
+                enemiesKilled++;
                 continue;
             }
         }
         if(enemy[i].isOnSameSpot()){
-            isInGame = false;
-            matrix.setupMatrix();
-            isInGameOver = true;
-            display.printGameOver();
+            endGame();
         }
         for(int j = 0; j < numEnemies; j++){
             if(i != j){

@@ -29,13 +29,6 @@ void Matrix::setLed(byte row, byte col, bool state, bool updateMatrix = 1){
     if(updateMatrix && memoryMatrix[row][col] != state){
         memoryMatrix[row][col] = state;
         memoryCounter += state ? 1 : -1;
-        if(memoryCounter <= 0){
-            // startGame();
-            isInGame = false;
-            matrix.setupMatrix();
-            isInGameOver = true;
-            display.printGameOver();
-        }
     }
 }
 

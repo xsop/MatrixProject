@@ -56,6 +56,7 @@ Enemy::Enemy(byte x, byte y) {
     this->x = x;
     this->y = y;
     visible = true;
+    alive = true;
     blinkInterval = enemyBlinkInterval;
 }
 
@@ -65,6 +66,7 @@ Enemy& Enemy::operator=(const Enemy& other) {
     visible = other.visible;
     blinkInterval = other.blinkInterval;
     lastBlink = other.lastBlink;
+    alive = other.alive;
     return *this;
 }
 
@@ -206,12 +208,7 @@ bool Bomb::exploded() {
              player.getY() >= y - (explosionRadius - 1) && 
              player.getX() == x)) {
 
-            // startGame();
-            isInGame = false;
-            matrix.setupMatrix();
-            isInGameOver = true;
-            display.printGameOver();
-            
+            endGame();
         }
 
     }
