@@ -30,11 +30,8 @@ void loop() {
             display.printGameOver();
             //bad practice, prevents clicking both exit and play
             while(controller.getJoystickButtonRead() == LOW){
+                menuSwitch = 0;
                 isInGameOver = false;
-                isInMain = true;
-                isInSettings = false;
-                isInAbout = false;
-                isInValueInput = false;
                 cursorPos = 0;
                 pagePos = 0;
                 display.printMainMenu();

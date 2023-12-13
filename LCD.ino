@@ -14,7 +14,7 @@ void Display::printIntro() {
     lcd.print("BOMBERMAN");
 }
 
-char* mainMenuTitles[5] = {"Play", "Highscore", "Settings", "About", "How to play"};
+char* mainMenuTitles[5] = {"Play", "Highscores", "Settings", "About", "How to play"};
 
 void Display::printMainMenu() {
     lcd.clear();

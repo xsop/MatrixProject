@@ -2,31 +2,25 @@
 
 void menu(){
     byte index = cursorPos + pagePos;
-    if(isInMain){
+    if(menuSwitch == 0){
         if(index == 0){
             startGame();
             isInGame = true;
         }
-        if(index == 2){
+        if(index == 2){ //settings
             changePrint = true;
-            isInMain = false;
-            isInSettings = true;
-            isInAbout = false;
-            isInValueInput = false;
+            menuSwitch = 2;
             cursorPos = 0;
             pagePos = 0;
         }
-        else if(index == 3){
+        else if(index == 3){ //about
             changePrint = true;
-            isInMain = false;
-            isInSettings = false;
-            isInAbout = true;
-            isInValueInput = false;
+            menuSwitch = 3;
             cursorPos = 0;
             pagePos = 0;
         }
     }
-    else if(isInSettings){
+    else if(menuSwitch == 2){
         if(index == 0 || index == 1){
             if(index == 0){
                 currentValue = display.getBrightness();
@@ -35,36 +29,24 @@ void menu(){
                 currentValue = matrix.getBrightness();
             }
             changePrint = true;
-            isInMain = false;
-            isInSettings = false;
-            isInAbout = false;
-            isInValueInput = true;
+            menuSwitch = 5;
         }
         else if(index == 4){
             changePrint = true;
-            isInMain = true;
-            isInSettings = false;
-            isInAbout = false;
-            isInValueInput = false;
+            menuSwitch = 0;
             cursorPos = 0;
             pagePos = 0;
         }
     }
-    else if(isInAbout){
+    else if(menuSwitch == 3){
         changePrint = true;
-        isInMain = true;
-        isInSettings = false;
-        isInAbout = false;
-        isInValueInput = false;
+        menuSwitch = 0;
         cursorPos = 0;
         pagePos = 0;
     }
-    else if(isInValueInput){
+    else if(menuSwitch == 5){
         changePrint = true;
-        isInMain = false;
-        isInSettings = true;
-        isInAbout = false;
-        isInValueInput = false;
+        menuSwitch = 2;
         if(index == 0){
             display.setBrightness(currentValue);
         }
@@ -79,19 +61,20 @@ void menu(){
 void menuUpdate(){
     if(changePrint){
 
-        if(isInMain){
+        if(menuSwitch == 0){
             display.printMainMenu();
         }
-        if(isInSettings){
+        if(menuSwitch == 2){
             display.printSettings();
         }
-        if(isInAbout){
+        if(menuSwitch == 3){
             display.printAbout();
         }
-        if(isInValueInput){
+        if(menuSwitch == 5){
             display.printValueInput();
         }
 
         changePrint = false;
     }
+    Serial.println(menuSwitch);
 }

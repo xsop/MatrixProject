@@ -19,7 +19,7 @@ void Controller::updateMenu() {
     display.lcd.setCursor(0, cursorPos);
     display.lcd.blink();
     storeJoystickValues();
-    if(isNextMoveAvailable(adaptiveMenuDelay) && !isInValueInput) {
+    if(isNextMoveAvailable(adaptiveMenuDelay) && menuSwitch != 5) {
         moveMenu();
     }
     if(getJoystickButtonRead() != lastJoystickButtonState) {
@@ -33,7 +33,7 @@ void Controller::updateMenu() {
 
     lastJoystickButtonState = getJoystickButtonRead();
 
-    if(isInValueInput){
+    if(menuSwitch == 5){
         if(isNextMoveAvailable(adaptiveMenuDelay)){
             if(getDirection() == RIGHT_DIRECTION){
                 if(currentValue < maxInput){
