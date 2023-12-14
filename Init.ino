@@ -4,6 +4,7 @@ void endGame() {
     isInGame = false;
     matrix.setupMatrix();
     isInGameOver = true;
+    menuSwitch = 6;
     display.printGameOver();
     enemiesKilled = 0;
 }

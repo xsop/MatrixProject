@@ -6,16 +6,14 @@ bool isInGame = false;
 byte cursorPos = 0;
 byte pagePos = 0;
 bool changePrint = true;
-// bool isInMain = true;
-// bool isInHighScores = false;
-// bool isInSettings = false;
-// bool isInAbout = false;
-// bool isInValueInput = false;
 
 byte menuSwitch = 0;
 byte maxPos = 3;
 byte currentValue = 0;
+char currentChar = 'a';
 bool isInGameOver = false;
+bool isInNewScore = false;
+bool isInInputName = false;
 
 void menu();
 void menuUpdate();

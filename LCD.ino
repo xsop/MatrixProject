@@ -34,7 +34,7 @@ void Display::printHighscores() {
     lcd.print("Back");
 }
 
-char* settingsTitles[5] = {"LCD Brightness", "Matrix Brightness", "Sound: ", "Reset highscore", "Back"};
+char* settingsTitles[5] = {"LCD Brightness", "Matrix Brightness", "Sound: ", "Reset highscores", "Back"};
 
 void Display::printSettings() {
     lcd.clear();
@@ -55,7 +55,19 @@ void Display::printAbout(){
     lcd.setCursor(0, 0);
     lcd.print("BOMBERMAN");
     lcd.setCursor(0, 1);
-    lcd.print(aboutText + currentValue);
+    for(int i = 0; i < 16; i++){
+        lcd.print(aboutText[i + currentValue]);
+    }
+}
+
+void Display::printHowToPlay(){
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    for(int i = 0; i < 16; i++){
+        lcd.print(howToPlay[i + currentValue]);
+    }
+    lcd.setCursor(0, 1);
+    lcd.print("Back");
 }
 
 void Display::printValueInput(){
@@ -66,9 +78,33 @@ void Display::printValueInput(){
     lcd.print(currentValue);
 }
 
+void Display::printNameInput(){
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Enter name:");
+    lcd.setCursor(0, 1);
+    for(int i = 0; i < 3; i++){
+        if(inputName[i] >= 'a' && inputName[i] <= 'z'){
+            lcd.print(inputName[i]);
+        }
+        else{
+            lcd.print("_");
+        }
+    }
+}
+
 void Display::printGameOver(){
     lcd.setCursor(0, 0);
     lcd.print("GAME OVER         ");
+}
+
+void Display::printNewScore(){
+    lcd.setCursor(0, 0);
+    lcd.print("Highscore!      ");
+    lcd.setCursor(0, 1);
+    lcd.print("Score: ");
+    lcd.print(currentScore);
+    lcd.print("      ");
 }
 
 void Display::printInGame(){

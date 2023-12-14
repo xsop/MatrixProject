@@ -12,8 +12,11 @@ public:
     void printHighscores();
     void printSettings();
     void printAbout();
+    void printHowToPlay();
     void printValueInput();
+    void printNameInput();
     void printGameOver();
+    void printNewScore();
     void printInGame();
 
     void setBrightness(int brightness);

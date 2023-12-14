@@ -16,7 +16,13 @@ void Controller::update() {
 
 
 void Controller::updateMenu() {
-    display.lcd.setCursor(0, cursorPos);
+    if(isHorizontal){
+        display.lcd.setCursor(cursorPos + pagePos, 1);
+    }
+    else{
+        display.lcd.setCursor(0, cursorPos);
+    }
+    
     display.lcd.blink();
     storeJoystickValues();
     if(isNextMoveAvailable(adaptiveMenuDelay) && menuSwitch != 5) {
@@ -94,6 +100,53 @@ void Controller::updateMenu() {
             else if(getDirection() == LEFT_DIRECTION){
                 if(currentValue > minInput){
                     currentValue--;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            }
+            else{
+                adaptiveMenuDelay = menuDelay;
+            }
+            lastMove = millis();
+        }
+    }
+    else if(menuSwitch == 4){
+        if(isNextMoveAvailable(adaptiveMenuDelay)){
+            if(getDirection() == RIGHT_DIRECTION){
+                if(currentValue < howToPlayTextLength - 1 - 16){
+                    currentValue++;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            
+            }
+            else if(getDirection() == LEFT_DIRECTION){
+                if(currentValue > minInput){
+                    currentValue--;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            }
+            else{
+                adaptiveMenuDelay = menuDelay;
+            }
+            lastMove = millis();
+        }
+    }
+    else if(menuSwitch == 8){
+        if(isNextMoveAvailable(adaptiveMenuDelay)){
+            if(getDirection() == RIGHT_DIRECTION){
+                if(currentChar < 'z'){
+                    currentChar++;
+                    inputName[cursorPos + pagePos] = currentChar;
+                    changePrint = true;
+                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+                }
+            }
+            else if(getDirection() == LEFT_DIRECTION){
+                if(currentChar > 'a'){
+                    currentChar--;
+                    inputName[cursorPos + pagePos] = currentChar;
                     changePrint = true;
                     adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
                 }
