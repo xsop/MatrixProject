@@ -1,8 +1,6 @@
 #include "Init.h"
 
 void setup() {
-    Serial.begin(115200);
-
     matrix.setupMatrix();
     initSound();
     initHighscores();

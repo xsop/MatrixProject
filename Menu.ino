@@ -32,7 +32,6 @@ MenuStruct menuStruct[] = {
 
 void buttonPressMenuActionHandler(){
     byte index = cursorPos + pagePos;
-    Serial.println(index);
     if(menuSwitch == 0){ //main
         if(index == 0){
             startGame();

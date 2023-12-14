@@ -95,8 +95,6 @@ void Enemy::moveEnemy(byte x, byte y) {
     this->y = y;
 
     matrix.setLed(this->x, this->y, true, false);
-
-    Serial.println(moveInterval);
 }
 
 bool Enemy::checkDirection(byte x, byte y){
