@@ -20,13 +20,14 @@ void setMenu(struct MenuStruct menuStruct){
 
 MenuStruct menuStruct[] = {
     {true, 0, 0, 0, 3, 0}, //main
-    {true, 1, 0, 0, 1, 0}, //highscores
+    {true, 1, 0, 0, 0, 0}, //highscores
     {true, 2, 0, 0, 3, 0}, //settings
     {true, 3, 0, 0, 0, 0}, //about
-    {true, 4, 0, 0, 1, 0}, //how to play
+    {true, 4, 0, 0, 0, 0}, //how to play
     {true, 5, 0, 0, 0, 0}, //value input
     {true, 6, 0, 0, 0, 0}, //game over
     {true, 7, 0, 0, 0, 0}, //show highscore
+    {true, 8, 0, 0, 1, 0} //input name
 };
 void menu(){
     byte index = cursorPos + pagePos;
@@ -102,9 +103,7 @@ void menu(){
         currentValue = 0;
     }
     else if(menuSwitch == 6){ //game over
-        changePrint = true;
         if(getHighscorePos() < 3){
-            Serial.println(getHighscorePos());
             setMenu(menuStruct[7]);
         }
         else{
