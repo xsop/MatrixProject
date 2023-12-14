@@ -14,8 +14,6 @@ void Display::printIntro() {
     lcd.print("BOMBERMAN");
 }
 
-char* mainMenuTitles[5] = {"Play", "Highscores", "Settings", "About", "How to play"};
-
 void Display::printMainMenu() {
     lcd.clear();
     lcd.setCursor(0, 0);
@@ -27,7 +25,6 @@ void Display::printMainMenu() {
 void Display::printHighscores() {
     lcd.clear();
     lcd.setCursor(0, 0);
-    // lcd.print(highscoresName[currentValue]);
     for(int i = 0; i < 3; i++){
         lcd.print(highscoresName[currentValue][i]);
     }
@@ -37,18 +34,16 @@ void Display::printHighscores() {
     lcd.print("Back");
 }
 
-char* settingsTitles[5] = {"LCD Brightness", "Matrix Brightness", "Sound: ", "Reset highscores", "Back"};
-
 void Display::printSettings() {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(settingsTitles[pagePos]);
-    if(pagePos == 2){
+    if(pagePos == 3){
         lcd.print(soundEnabled ? "On" : "Off");
     }
     lcd.setCursor(0, 1);
     lcd.print(settingsTitles[pagePos + 1]);
-    if(pagePos + 1 == 2){
+    if(pagePos + 1 == 3){
         lcd.print(soundEnabled ? "On" : "Off");
     }
 }
@@ -99,11 +94,14 @@ void Display::printNameInput(){
 void Display::printGameOver(){
     lcd.setCursor(0, 0);
     lcd.print("GAME OVER         ");
+    lcd.setCursor(0, 1);
+    lcd.print("                 ");
 }
 
 void Display::printNewScore(){
     lcd.setCursor(0, 0);
-    lcd.print("Highscore!      ");
+    lcd.print("Highscore > ");
+    lcd.print(getHighscorePos() + 1);
     lcd.setCursor(0, 1);
     lcd.print("Score: ");
     lcd.print(currentScore);
@@ -114,8 +112,11 @@ void Display::printInGame(){
     lcd.setCursor(0, 0);
     lcd.print("Enemies left: ");
     lcd.print(numEnemies - enemiesKilled);
+    lcd.print("      ");
     lcd.setCursor(0, 1);
-    lcd.print("           ");
+    lcd.print("Score: ");
+    lcd.print(currentScore);
+    lcd.print("      ");
 }
 
 void Display::setBrightness(int brightness){
@@ -125,11 +126,11 @@ void Display::setBrightness(int brightness){
     else if(brightness > maxInput){
         brightness = maxInput;
     }
-    LCDBrightness = map(brightness, minInput, maxInput, 0, 255);
+    LCDBrightness = map(brightness, minInput, maxInput, minLCDBrightness, maxLCDBrightness);
     analogWrite(displayLedPin, LCDBrightness);
     EEPROM.update(LCDBrightnessAddress, LCDBrightness);
 }
 
 int Display::getBrightness(){
-    return map(LCDBrightness, 0, 255, minInput, maxInput);
+    return map(LCDBrightness, minLCDBrightness, maxLCDBrightness, minInput, maxInput);
 }

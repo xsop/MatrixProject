@@ -12,6 +12,6 @@ byte maxPos = 3;
 byte currentValue = 0;
 char currentChar = 'a';
 
-void setMenu(struct MenuStruct menuStruct); // Added 'struct' before MenuStruct
+void setMenu(struct MenuStruct menuStruct);
 void menu();
 void menuUpdate();

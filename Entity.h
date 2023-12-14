@@ -28,6 +28,7 @@ public:
 class Enemy : public Entity {
 public:
     Enemy(byte x, byte y);
+    Enemy();
     Enemy& operator=(const Enemy& other);
 
     void moveEnemy(byte x, byte y);
@@ -57,6 +58,7 @@ private:
     byte randomDirection;
     byte randomChanceChangeDirection = 10;
 
+    const float moveIntervalMultiplier = 0.999f;
     unsigned long moveInterval = 500;
     unsigned long lastMove = 0;
 };

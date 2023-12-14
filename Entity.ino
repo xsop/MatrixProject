@@ -52,6 +52,14 @@ bool Player::isOutOfBounds(byte x, byte y) const {
     return false;
 }
 
+Enemy::Enemy() {
+    this->x = enemyStartX;
+    this->y = enemyStartY;
+    visible = true;
+    alive = true;
+    blinkInterval = enemyBlinkInterval;
+}
+
 Enemy::Enemy(byte x, byte y) {
     this->x = x;
     this->y = y;
@@ -67,6 +75,7 @@ Enemy& Enemy::operator=(const Enemy& other) {
     blinkInterval = other.blinkInterval;
     lastBlink = other.lastBlink;
     alive = other.alive;
+    moveInterval = other.moveInterval;
     return *this;
 }
 
@@ -86,6 +95,8 @@ void Enemy::moveEnemy(byte x, byte y) {
     this->y = y;
 
     matrix.setLed(this->x, this->y, true, false);
+
+    Serial.println(moveInterval);
 }
 
 bool Enemy::checkDirection(byte x, byte y){
@@ -146,6 +157,7 @@ void Enemy::pathfind(){
                 moveEnemy(x + 1, y);
                 break;
         }
+        moveInterval *= moveIntervalMultiplier; // increase speed to make it more difficult
         lastMove = millis();
     }
 }

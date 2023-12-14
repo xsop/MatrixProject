@@ -30,7 +30,7 @@ void startGame() {
     randomSeed(analogRead(unusedPin));
     gameMap.generate();
     for(int i = 0; i < numEnemies; i++) {
-        enemy[i] = Enemy(7 - i,7 - i);
+        enemy[i] = Enemy(enemyStartX, enemyStartY);
         enemy[i].setRandomDirection(random(4));
     }
 
@@ -53,10 +53,11 @@ void enemiesHandler(){
             if(enemy[i].isAlive()){
                 enemy[i].setVisible(enemiesVisible);
             }
-            else{
+            else if(!enemy[i].isOnSameSpotAsPlayer()){
                 enemy[i].setVisible(false);
             }
         }
+    
         enemiesVisible = !enemiesVisible;
     }
     // process enemies
@@ -105,6 +106,11 @@ void enemiesHandler(){
 
 void initEEPROM() {
     soundEnabled = EEPROM.read(soundEnabledAddress) & 0x01;
+
+    numEnemies = EEPROM.read(numEnemiesAddress);
+    if(numEnemies > maxNumEnemies || numEnemies < minNumEnemies){
+        numEnemies = maxNumEnemies;
+    }
         
     matrixBrightness = EEPROM.read(matrixBrightnessAddress);
     if(matrixBrightness > maxMatrixBrightness || matrixBrightness < minMatrixBrightness){

@@ -15,8 +15,11 @@ const byte d6 = 5;
 const byte d7 = 4;
 const byte displayLedPin = 3;
 
-const int playerStartX = 0;
-const int playerStartY = 0;
+const int playerStartX = 1;
+const int playerStartY = 1;
+
+const int enemyStartX = 7;
+const int enemyStartY = 7;
 
 const int bombBlinkInterval = 200;
 const int playerBlinkInterval = 500;
@@ -49,11 +52,13 @@ const byte maxInput = 15;
 const byte maxHighscores = 3 - 1;
 const int maxScorePerEnemy = 1000;
 
+//I chose random addresses
 const int highscoresAddress[3] = {100, 102, 104};
 const int highscoresNameAddress[3] = {110, 113, 116};
 const int matrixBrightnessAddress = 321;
 const int LCDBrightnessAddress = 896;
 const int soundEnabledAddress = 899;
+const int numEnemiesAddress = 543;
 
 const byte numDisplayRows = 16;
 
@@ -62,4 +67,5 @@ const byte minLCDBrightness = 0;
 const byte maxMatrixBrightness = 15;
 const byte minMatrixBrightness = 0;
 
-const byte numEnemies = 2;
+const byte maxNumEnemies = 7;
+const byte minNumEnemies = 1;

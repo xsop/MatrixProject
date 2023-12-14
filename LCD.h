@@ -25,6 +25,10 @@ public:
     LiquidCrystal lcd = LiquidCrystal(rs, en, d4, d5, d6, d7);
 };
 
+char* mainMenuTitles[5] = {"Play", "Highscores", "Settings", "About", "How to play"};
+
+char* settingsTitles[6] = {"Enemy Count", "LCD Brightness", "Matrix Brightness", "Sound: ", "Reset highscores", "Back"};
+
 char* aboutText = "by Stefan Paun: github.com/xsop";
 const byte aboutTextLength = strlen(aboutText);
 

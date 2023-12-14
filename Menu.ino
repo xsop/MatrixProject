@@ -21,7 +21,7 @@ void setMenu(struct MenuStruct menuStruct){
 MenuStruct menuStruct[] = {
     {true, 0, 0, 0, 3, 0}, //main
     {true, 1, 0, 0, 0, 0}, //highscores
-    {true, 2, 0, 0, 3, 0}, //settings
+    {true, 2, 0, 0, 4, 0}, //settings
     {true, 3, 0, 0, 0, 0}, //about
     {true, 4, 0, 0, 0, 0}, //how to play
     {true, 5, 0, 0, 0, 0}, //value input
@@ -57,26 +57,29 @@ void menu(){
         
     }
     else if(menuSwitch == 2){ //settings
-        if(index == 0 || index == 1){
+        if(index == 0 || index == 1 || index == 2){
             if(index == 0){
-                currentValue = display.getBrightness();
+                currentValue = numEnemies;
             }
             else if(index == 1){
+                currentValue = display.getBrightness();
+            }
+            else if(index == 2){
                 currentValue = matrix.getBrightness();
             }
             changePrint = true;
             menuSwitch = 5;
         }
-        else if(index == 2){
+        else if(index == 3){
             changePrint = true;
             soundEnabled = !soundEnabled;
             EEPROM.update(soundEnabledAddress, soundEnabled);
         }
-        else if(index == 3){
-            resetHighscores();
-            setMenu(menuStruct[index]);
-        }
         else if(index == 4){
+            resetHighscores();
+            setMenu(menuStruct[2]);
+        }
+        else if(index == 5){
             setMenu(menuStruct[0]);
         }
     }
@@ -94,9 +97,13 @@ void menu(){
         cursorPos = 0;
         pagePos = 0;
         if(index == 0){
-            display.setBrightness(currentValue);
+            numEnemies = currentValue;
+            EEPROM.update(numEnemiesAddress, numEnemies);
         }
         else if(index == 1){
+            display.setBrightness(currentValue);
+        }
+        else if(index == 2){
             matrix.setupMatrix();
             matrix.setBrightness(currentValue);
         }

@@ -8,6 +8,7 @@ int adaptiveMenuDelay = menuDelay;
 
 int matrixBrightness = 2;
 int LCDBrightness = 255;
+byte numEnemies = 2;
 
 bool soundEnabled = true;
 bool isHorizontal = false;
@@ -18,7 +19,4 @@ unsigned long blinkInterval = 150;
 
 byte enemiesKilled = 0;
 
-Enemy enemy[numEnemies] = {
-    Enemy(7, 7),
-    Enemy(7, 7)
-};
+Enemy enemy[maxNumEnemies];

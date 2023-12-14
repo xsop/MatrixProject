@@ -1,12 +1,12 @@
 #include "GameController.h"
 
 void showUpdatedSettings(){
-    if(cursorPos + pagePos == 1){
+    if(cursorPos + pagePos == 2){
         fullMatrixOn();
         matrix.setBrightness(currentValue);
     }
 
-    if(cursorPos + pagePos == 0){
+    if(cursorPos + pagePos == 1){
         display.setBrightness(currentValue);
     }
 }
@@ -109,7 +109,12 @@ void Controller::updateMenu() {
             break;
         case 5:
             showUpdatedSettings();
-            updateCurrentValue(minInput, maxInput);
+            if(cursorPos + pagePos == 0){
+                updateCurrentValue(minNumEnemies, maxNumEnemies);
+            }
+            else if(cursorPos + pagePos == 1 || cursorPos + pagePos == 2){
+                updateCurrentValue(minInput, maxInput);
+            }
             break;
         case 8:
             updateCurrentChar('a', 'z');
