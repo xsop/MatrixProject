@@ -35,7 +35,7 @@ void startGame() {
         enemy[i].setRandomDirection(random(4));
     }
 
-    currentScore = 0;
+    currentScore = 1;
 
     startGameTime = millis();
 }
@@ -79,7 +79,7 @@ void enemiesHandler(){
             (bombX == enemyX && bombY > enemyY - explosionRadius && bombY < enemyY + explosionRadius)||
             (bombY == enemyY && bombX > enemyX - explosionRadius && bombX < enemyX + explosionRadius)){
                 enemy[i].setAlive(false);
-                currentScore += maxScorePerEnemy - min(maxScorePerEnemy, map((millis() - startGameTime), 0, 120000, 0, maxScorePerEnemy));
+                updateScore();
                 enemiesKilled++;
                 continue;
             }

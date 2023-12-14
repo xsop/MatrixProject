@@ -59,8 +59,11 @@ const byte minInput = 0;
 const byte maxInput = 15;
 
 const byte maxHighscores = 3 - 1;
+const int maxScorePerEnemy = 1000;
 
+const int highscoresAddress[3] = {100, 102, 104};
+const int highscoresNameAddress[3] = {110, 113, 116};
 const int matrixBrightnessAddress = 321;
 const int LCDBrightnessAddress = 896;
+const int soundEnabledAddress = 899;
 
-const int maxScorePerEnemy = 1000;

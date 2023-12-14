@@ -4,7 +4,14 @@ void setup() {
     Serial.begin(115200);
 
     matrix.setupMatrix();
-
+    initHighscores();
+    if(EEPROM.read(soundEnabledAddress) != 0){
+        soundEnabled = 1;
+    }
+    else{
+        soundEnabled = 0;
+    }
+        
     matrixBrightness = EEPROM.read(matrixBrightnessAddress);
     if(matrixBrightness > 15 || matrixBrightness < 0){
         matrixBrightness = 15;

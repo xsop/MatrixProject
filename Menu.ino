@@ -65,6 +65,15 @@ void menu(){
         else if(index == 2){
             changePrint = true;
             soundEnabled = !soundEnabled;
+            EEPROM.update(soundEnabledAddress, soundEnabled);
+        }
+        else if(index == 3){
+            resetHighscores();
+            changePrint = true;
+            menuSwitch = 2;
+            cursorPos = 0;
+            pagePos = 0;
+            currentValue = 0;
         }
         else if(index == 4){
             changePrint = true;
@@ -108,10 +117,21 @@ void menu(){
     }
     else if(menuSwitch == 6){ //game over
         changePrint = true;
-        menuSwitch = 7;
-        cursorPos = 0;
-        pagePos = 0;
-        currentValue = 0;
+        if(getHighscorePos() < 3){
+            Serial.println(getHighscorePos());
+            menuSwitch = 7;
+            cursorPos = 0;
+            pagePos = 0;
+            currentValue = 0;
+        }
+        else{
+            menuSwitch = 0;
+            cursorPos = 0;
+            pagePos = 0;
+            currentValue = 0;
+            maxPos = 3;
+        }
+        
     }
     else if(menuSwitch == 7){ //show highscore
         changePrint = true;
@@ -123,6 +143,7 @@ void menu(){
         isHorizontal = true;
     }
     else if(menuSwitch == 8){ //input name
+        saveHighscores();
         changePrint = true;
         menuSwitch = 0;
         cursorPos = 0;

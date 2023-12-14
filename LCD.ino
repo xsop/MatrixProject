@@ -24,11 +24,14 @@ void Display::printMainMenu() {
     lcd.print(mainMenuTitles[pagePos + 1]);
 }
 
-char* highscores[3] = {"xop - 342", "top - 122", "pox - 1"};
-
 void Display::printHighscores() {
     lcd.clear();
     lcd.setCursor(0, 0);
+    // lcd.print(highscoresName[currentValue]);
+    for(int i = 0; i < 3; i++){
+        lcd.print(highscoresName[currentValue][i]);
+    }
+    lcd.print(" - ");
     lcd.print(highscores[currentValue]);
     lcd.setCursor(0, 1);
     lcd.print("Back");
