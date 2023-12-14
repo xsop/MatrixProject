@@ -111,8 +111,8 @@ bool Enemy::checkDirection(byte x, byte y){
 void Enemy::pathfind(){
     if(millis() - moveInterval > lastMove) {
         
-        randomChanceChangeDirection = random(100);
-        if(randomChanceChangeDirection < 10) {
+        int randomPercentage = random(100);
+        if(randomPercentage < randomChanceChangeDirection) {
             randomDirection = random(4);
         }
 

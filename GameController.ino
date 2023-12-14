@@ -1,5 +1,16 @@
 #include "GameController.h"
 
+void showUpdatedSettings(){
+    if(cursorPos + pagePos == 1){
+        fullMatrixOn();
+        matrix.setBrightness(currentValue);
+    }
+
+    if(cursorPos + pagePos == 0){
+        display.setBrightness(currentValue);
+    }
+}
+
 Controller::Controller() {
     pinMode(joystickPinX, INPUT);
     pinMode(joystickPinY, INPUT);
@@ -14,6 +25,54 @@ void Controller::update() {
     handleButton();
 }
 
+void Controller::updateCurrentValue(byte minInput, byte maxInput){
+    if(isNextMoveAvailable(adaptiveMenuDelay)){
+        if(getDirection() == RIGHT_DIRECTION){
+            if(currentValue < maxInput){
+                currentValue++;
+                changePrint = true;
+                adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
+            }
+        
+        }
+        else if(getDirection() == LEFT_DIRECTION){
+            if(currentValue > minInput){
+                currentValue--;
+                changePrint = true;
+                adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
+            }
+        }
+        else{
+            adaptiveMenuDelay = menuDelay;
+        }
+        lastMove = millis();
+    }
+}
+
+void Controller::updateCurrentChar(char minInput, char maxInput){
+    if(isNextMoveAvailable(adaptiveMenuDelay)){
+        if(getDirection() == RIGHT_DIRECTION){
+            if(currentChar < maxInput){
+                currentChar++;
+                inputName[cursorPos + pagePos] = currentChar;
+                changePrint = true;
+                adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
+            }
+        }
+        else if(getDirection() == LEFT_DIRECTION){
+            if(currentChar > minInput){
+                currentChar--;
+                inputName[cursorPos + pagePos] = currentChar;
+                changePrint = true;
+                adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
+            }
+        }
+        else{
+            adaptiveMenuDelay = menuDelay;
+        }
+        lastMove = millis();
+    }
+}
 
 void Controller::updateMenu() {
     if(isHorizontal){
@@ -38,134 +97,23 @@ void Controller::updateMenu() {
     }
 
     lastJoystickButtonState = getJoystickButtonRead();
-
-    if(menuSwitch == 5){
-
-        if(cursorPos + pagePos == 1){
-            fullMatrixOn();
-            matrix.setBrightness(currentValue);
-        }
-
-        if(cursorPos + pagePos == 0){
-            display.setBrightness(currentValue);
-        }
-
-        if(isNextMoveAvailable(adaptiveMenuDelay)){
-            if(getDirection() == RIGHT_DIRECTION){
-                if(currentValue < maxInput){
-                    currentValue++;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            
-            }
-            else if(getDirection() == LEFT_DIRECTION){
-                if(currentValue > minInput){
-                    currentValue--;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            }
-            else{
-                adaptiveMenuDelay = menuDelay;
-            }
-            lastMove = millis();
-        }
-    }
-
-    else if(menuSwitch == 1){
-        if(isNextMoveAvailable(adaptiveMenuDelay)){
-            if(getDirection() == RIGHT_DIRECTION){
-                if(currentValue < maxHighscores){
-                    currentValue++;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            
-            }
-            else if(getDirection() == LEFT_DIRECTION){
-                if(currentValue > 0){
-                    currentValue--;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            }
-            else{
-                adaptiveMenuDelay = menuDelay;
-            }
-            lastMove = millis();
-        }
-    }
-
-    else if(menuSwitch == 3){
-        if(isNextMoveAvailable(adaptiveMenuDelay)){
-            if(getDirection() == RIGHT_DIRECTION){
-                if(currentValue < aboutTextLength - numDisplayRows){
-                    currentValue++;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            
-            }
-            else if(getDirection() == LEFT_DIRECTION){
-                if(currentValue > minInput){
-                    currentValue--;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            }
-            else{
-                adaptiveMenuDelay = menuDelay;
-            }
-            lastMove = millis();
-        }
-    }
-    else if(menuSwitch == 4){
-        if(isNextMoveAvailable(adaptiveMenuDelay)){
-            if(getDirection() == RIGHT_DIRECTION){
-                if(currentValue < howToPlayTextLength - 16){
-                    currentValue++;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            
-            }
-            else if(getDirection() == LEFT_DIRECTION){
-                if(currentValue > minInput){
-                    currentValue--;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            }
-            else{
-                adaptiveMenuDelay = menuDelay;
-            }
-            lastMove = millis();
-        }
-    }
-    else if(menuSwitch == 8){
-        if(isNextMoveAvailable(adaptiveMenuDelay)){
-            if(getDirection() == RIGHT_DIRECTION){
-                if(currentChar < 'z'){
-                    currentChar++;
-                    inputName[cursorPos + pagePos] = currentChar;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            }
-            else if(getDirection() == LEFT_DIRECTION){
-                if(currentChar > 'a'){
-                    currentChar--;
-                    inputName[cursorPos + pagePos] = currentChar;
-                    changePrint = true;
-                    adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
-                }
-            }
-            else{
-                adaptiveMenuDelay = menuDelay;
-            }
-            lastMove = millis();
-        }
+    switch (menuSwitch) {
+        case 1:
+            updateCurrentValue(0, maxHighscores);
+            break;
+        case 3:
+            updateCurrentValue(0, aboutTextLength - numDisplayRows);
+            break;
+        case 4:
+            updateCurrentValue(0, howToPlayTextLength - numDisplayRows);
+            break;
+        case 5:
+            showUpdatedSettings();
+            updateCurrentValue(minInput, maxInput);
+            break;
+        case 8:
+            updateCurrentChar('a', 'z');
+            break;
     }
 }
 
@@ -176,12 +124,12 @@ void Controller::moveMenu(byte maxPos){
         if(cursorPos == 1){
             cursorPos = 0;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
         }
         else if(pagePos > 0){
             pagePos --;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
             changePrint = true;
         }
         break;
@@ -190,12 +138,12 @@ void Controller::moveMenu(byte maxPos){
         if(cursorPos == 0){
             cursorPos = 1;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
         }
         else if(pagePos < maxPos){
             pagePos++;
             lastMove = millis();
-            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
+            adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, minAdaptiveMoveDelay);
             changePrint = true;
         }
         break;

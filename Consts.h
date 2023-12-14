@@ -39,6 +39,7 @@ const int moveDelay = 100;
 const int menuDelay = 350;
 
 const float adaptiveMoveDelayMultiplier = 0.7;
+const byte minAdaptiveMoveDelay = 50;
 
 const int debounceDelay = 50;
 

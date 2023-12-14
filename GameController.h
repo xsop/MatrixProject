@@ -16,6 +16,9 @@ class Controller {
         void update();
         void updateMenu();
 
+        void updateCurrentValue(byte minInput, byte maxInput);
+        void updateCurrentChar(char minInput, char maxInput);
+
         int getJoystickValueX() const { return joystickValueX; }
         int getJoystickValueY() const { return joystickValueY; }
         byte getJoystickButtonRead() const { return digitalRead(joystickPinSwitch); }
