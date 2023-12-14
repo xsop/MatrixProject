@@ -13,5 +13,5 @@ byte currentValue = 0;
 char currentChar = 'a';
 
 void setMenu(struct MenuStruct menuStruct);
-void menu();
+void buttonPressMenuActionHandler();
 void menuUpdate();

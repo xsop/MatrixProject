@@ -1,6 +1,7 @@
 #include "Init.h"
 
 void endGame() {
+    timesToPlayGameOver = 1;
     isInGame = false;
     matrix.setupMatrix();
     menuSwitch = 6;
@@ -78,6 +79,7 @@ void enemiesHandler(){
             (bombX == enemyX && bombY > enemyY - explosionRadius && bombY < enemyY + explosionRadius)||
             (bombY == enemyY && bombX > enemyX - explosionRadius && bombX < enemyX + explosionRadius)){
                 enemy[i].setAlive(false);
+                playEnemyDeathSound();
                 updateScore();
                 enemiesKilled++;
                 continue;
@@ -116,13 +118,13 @@ void initEEPROM() {
     if(matrixBrightness > maxMatrixBrightness || matrixBrightness < minMatrixBrightness){
         matrixBrightness = maxMatrixBrightness;
     }
-    matrix.setBrightness(map(matrixBrightness, minMatrixBrightness, maxMatrixBrightness, minInput, maxInput));
+    matrix.setBrightness(map(matrixBrightness, minMatrixBrightness, maxMatrixBrightness, minInput, maxInput), true);
 
     LCDBrightness = EEPROM.read(LCDBrightnessAddress);
     if(LCDBrightness > maxLCDBrightness || LCDBrightness < minLCDBrightness){
         LCDBrightness = maxLCDBrightness;
     }
-    display.setBrightness(map(LCDBrightness, minLCDBrightness, maxLCDBrightness, minInput, maxInput));
+    display.setBrightness(map(LCDBrightness, minLCDBrightness, maxLCDBrightness, minInput, maxInput), true);
 }
 
 bool isPlayerOnBomb(){
@@ -141,4 +143,5 @@ void updateGame() {
     display.printInGame();
     controller.update();
     gameMap.update();
+    playMainTheme();
 }

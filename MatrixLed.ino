@@ -37,7 +37,7 @@ bool Matrix::getLed(byte row, byte col) const {
     return memoryMatrix[row][col];
 }
 
-void Matrix::setBrightness(int brightness){
+void Matrix::setBrightness(int brightness, bool setEEPROM){
     if(brightness < minInput ){
         brightness = minInput;
     }
@@ -46,7 +46,9 @@ void Matrix::setBrightness(int brightness){
     }
     matrixBrightness = map(brightness, minInput, maxInput, 0, 15);
     lc.setIntensity(0, matrixBrightness);
-    EEPROM.update(matrixBrightnessAddress, matrixBrightness);
+    if(setEEPROM){
+        EEPROM.update(matrixBrightnessAddress, matrixBrightness);
+    }
 }
 
 int Matrix::getBrightness(){

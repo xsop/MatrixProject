@@ -19,7 +19,7 @@ public:
     void printNewScore();
     void printInGame();
 
-    void setBrightness(int brightness);
+    void setBrightness(int brightness, bool setEEPROM);
     int getBrightness();
 
     LiquidCrystal lcd = LiquidCrystal(rs, en, d4, d5, d6, d7);

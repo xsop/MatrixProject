@@ -10,6 +10,7 @@
 #include "LCD.h"
 #include "Menu.h"
 #include "Score.h"
+#include "Sound.h"
 
 Matrix matrix;
 Player player;

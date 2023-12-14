@@ -1,6 +1,8 @@
 #pragma once
 
-const int unusedPin = 5;
+const byte unusedPin = 5;
+
+const byte buzzerPin = 13;
 
 const byte dinPin = 12; // pin 12 is connected to the MAX7219 pin 1
 const byte clockPin = 11; // pin 11 is connected to the CLK pin 13

@@ -29,7 +29,8 @@ MenuStruct menuStruct[] = {
     {true, 7, 0, 0, 0, 0}, //show highscore
     {true, 8, 0, 0, 1, 0} //input name
 };
-void menu(){
+
+void buttonPressMenuActionHandler(){
     byte index = cursorPos + pagePos;
     Serial.println(index);
     if(menuSwitch == 0){ //main
@@ -101,11 +102,11 @@ void menu(){
             EEPROM.update(numEnemiesAddress, numEnemies);
         }
         else if(index == 1){
-            display.setBrightness(currentValue);
+            display.setBrightness(currentValue, true);
         }
         else if(index == 2){
             matrix.setupMatrix();
-            matrix.setBrightness(currentValue);
+            matrix.setBrightness(currentValue, true);
         }
         currentValue = 0;
     }

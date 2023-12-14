@@ -3,11 +3,11 @@
 void showUpdatedSettings(){
     if(cursorPos + pagePos == 2){
         fullMatrixOn();
-        matrix.setBrightness(currentValue);
+        matrix.setBrightness(currentValue, false);
     }
 
     if(cursorPos + pagePos == 1){
-        display.setBrightness(currentValue);
+        display.setBrightness(currentValue, false);
     }
 }
 
@@ -28,6 +28,7 @@ void Controller::update() {
 void Controller::updateCurrentValue(byte minInput, byte maxInput){
     if(isNextMoveAvailable(adaptiveMenuDelay)){
         if(getDirection() == RIGHT_DIRECTION){
+            playScrollSound();
             if(currentValue < maxInput){
                 currentValue++;
                 changePrint = true;
@@ -36,6 +37,7 @@ void Controller::updateCurrentValue(byte minInput, byte maxInput){
         
         }
         else if(getDirection() == LEFT_DIRECTION){
+            playScrollSound();
             if(currentValue > minInput){
                 currentValue--;
                 changePrint = true;
@@ -52,6 +54,7 @@ void Controller::updateCurrentValue(byte minInput, byte maxInput){
 void Controller::updateCurrentChar(char minInput, char maxInput){
     if(isNextMoveAvailable(adaptiveMenuDelay)){
         if(getDirection() == RIGHT_DIRECTION){
+            playScrollSound();
             if(currentChar < maxInput){
                 currentChar++;
                 inputName[cursorPos + pagePos] = currentChar;
@@ -60,6 +63,7 @@ void Controller::updateCurrentChar(char minInput, char maxInput){
             }
         }
         else if(getDirection() == LEFT_DIRECTION){
+            playScrollSound();
             if(currentChar > minInput){
                 currentChar--;
                 inputName[cursorPos + pagePos] = currentChar;
@@ -90,7 +94,8 @@ void Controller::updateMenu() {
     if(getJoystickButtonRead() != lastJoystickButtonState) {
         if(millis() - lastDebounceTime > debounceDelay) {
             if(getJoystickButtonRead() == LOW) {  
-                menu();
+                playButtonSound();
+                buttonPressMenuActionHandler();
             }
         }
         lastDebounceTime = millis();
@@ -126,6 +131,7 @@ void Controller::moveMenu(byte maxPos){
     int direction = getDirection();
     switch (direction) {
     case UP_DIRECTION:
+        playScrollSound();
         if(cursorPos == 1){
             cursorPos = 0;
             lastMove = millis();
@@ -140,6 +146,7 @@ void Controller::moveMenu(byte maxPos){
         break;
 
     case DOWN_DIRECTION:
+        playScrollSound();
         if(cursorPos == 0){
             cursorPos = 1;
             lastMove = millis();
@@ -172,6 +179,7 @@ void Controller::handleButton(){
         if(millis() - lastDebounceTime > debounceDelay) {
             if(getJoystickButtonRead() == LOW) {  
                 gameMap.placeBomb();
+                playButtonSound();
             }
         }
         lastDebounceTime = millis();

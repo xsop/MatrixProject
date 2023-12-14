@@ -12,7 +12,7 @@ public:
     void setLed(byte row, byte col, bool state, bool updateMatrix = 1);
     bool getLed(byte row, byte col) const;
     int getMemoryCounter() const { return memoryCounter; }
-    void setBrightness(int brightness);
+    void setBrightness(int brightness, bool setEEPROM);
     int getBrightness();
 private:
     LedControl lc = LedControl(dinPin, clockPin, loadPin, 1); //DIN, CLK, LOAD, No. DRIVER

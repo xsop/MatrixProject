@@ -119,7 +119,7 @@ void Display::printInGame(){
     lcd.print("      ");
 }
 
-void Display::setBrightness(int brightness){
+void Display::setBrightness(int brightness, bool setEEPROM){
     if(brightness < minInput){
         brightness = minInput;
     }
@@ -128,7 +128,9 @@ void Display::setBrightness(int brightness){
     }
     LCDBrightness = map(brightness, minInput, maxInput, minLCDBrightness, maxLCDBrightness);
     analogWrite(displayLedPin, LCDBrightness);
-    EEPROM.update(LCDBrightnessAddress, LCDBrightness);
+    if(setEEPROM){
+        EEPROM.update(LCDBrightnessAddress, LCDBrightness);
+    }
 }
 
 int Display::getBrightness(){
