@@ -1,7 +1,7 @@
 #include "LCD.h"
 
 Display::Display() {
-    lcd.begin(16, 2);
+    lcd.begin(numDisplayRows, 2);
     lcd.setCursor(0, 0);
     analogWrite(displayLedPin, LCDBrightness);
 }
@@ -58,7 +58,7 @@ void Display::printAbout(){
     lcd.setCursor(0, 0);
     lcd.print("BOMBERMAN");
     lcd.setCursor(0, 1);
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < numDisplayRows; i++){
         lcd.print(aboutText[i + currentValue]);
     }
 }
@@ -66,7 +66,7 @@ void Display::printAbout(){
 void Display::printHowToPlay(){
     lcd.clear();
     lcd.setCursor(0, 0);
-    for(int i = 0; i < 16; i++){
+    for(int i = 0; i < numDisplayRows; i++){
         lcd.print(howToPlay[i + currentValue]);
     }
     lcd.setCursor(0, 1);

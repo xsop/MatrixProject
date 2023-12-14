@@ -18,13 +18,6 @@ void GameMap::update() {
 }
 
 void GameMap::generate() {
-    int wallCount = (matrixSize * matrixSize) * wallPercentage / 100;
-    if(wallCount < 1) {
-        wallCount = 1;
-    }
-    byte wallX = 0;
-    byte wallY = 0;
-
     for(int i = 0; i < matrixSize; i+=2) {
         for(int j = 0; j < matrixSize; j+=2) {
             matrix.setLed(i, j, true);
@@ -45,12 +38,3 @@ bool GameMap::isObstacle(int x, int y) const {
     return matrix.getLed(x, y);
 }
 
-bool areEntitiesOnSameSpot(){
-    if (bomb == nullptr) {
-        return false;
-    }
-    if (player.getX() == bomb->getX() && player.getY() == bomb->getY()) {
-        return true;
-    }
-    return false;
-}

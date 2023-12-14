@@ -45,6 +45,7 @@ void Matrix::setBrightness(int brightness){
         brightness = maxInput;
     }
     matrixBrightness = map(brightness, minInput, maxInput, 0, 15);
+    lc.setIntensity(0, matrixBrightness);
     EEPROM.update(matrixBrightnessAddress, matrixBrightness);
 }
 

@@ -5,25 +5,7 @@ void setup() {
 
     matrix.setupMatrix();
     initHighscores();
-    if(EEPROM.read(soundEnabledAddress) != 0){
-        soundEnabled = 1;
-    }
-    else{
-        soundEnabled = 0;
-    }
-        
-    matrixBrightness = EEPROM.read(matrixBrightnessAddress);
-    if(matrixBrightness > 15 || matrixBrightness < 0){
-        matrixBrightness = 15;
-    }
-    matrix.setBrightness(matrixBrightness);
-
-    LCDBrightness = EEPROM.read(LCDBrightnessAddress);
-    if(LCDBrightness > 255 || LCDBrightness < 0){
-        LCDBrightness = 255;
-    }
-    display.setBrightness(map(LCDBrightness, 0, 255, minInput, maxInput));
-
+    initEEPROM();
     display.printIntro();
 }
 

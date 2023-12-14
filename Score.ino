@@ -10,16 +10,6 @@ void initHighscores(){
             EEPROM.get(highscoresAddress[i], highscores[i]);
             EEPROM.get(highscoresNameAddress[i], highscoresName[i]);
         }
-
-        // Serial.print(highscoresName[i]);
-        // Serial.print(" - ");
-        // Serial.println(highscores[i]);
-        for(int j = 0; j < 3; j++){
-            Serial.print(highscoresName[i][j]);
-        }
-        Serial.print(" - ");
-        Serial.print(highscores[i]);
-        Serial.println();
     }
 }
 

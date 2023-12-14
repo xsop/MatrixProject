@@ -3,8 +3,8 @@
 void endGame() {
     isInGame = false;
     matrix.setupMatrix();
-    isInGameOver = true;
     menuSwitch = 6;
+    changePrint = true;
     display.printGameOver();
     enemiesKilled = 0;
 }
@@ -27,7 +27,6 @@ void startGame() {
 
     matrix.setupMatrix();
     // regenerate random seed
-    // needed to make a new game map
     randomSeed(analogRead(unusedPin));
     gameMap.generate();
     for(int i = 0; i < numEnemies; i++) {
@@ -35,46 +34,45 @@ void startGame() {
         enemy[i].setRandomDirection(random(4));
     }
 
-    currentScore = 1;
-
+    currentScore = 0;
     startGameTime = millis();
 }
 
 void enemiesHandler(){
-    // Serial.print(enemy[0].getX());
-    // Serial.print(" ");
-    // Serial.print(enemy[0].getY());
-    // Serial.print(" - ");
-    // Serial.print(enemy[1].getX());
-    // Serial.print(" ");
-    // Serial.println(enemy[1].getY());
-
     if(enemiesKilled == numEnemies){
         endGame();
     }
-
+    // blink all enemies at roughly the same time
+    // depending on the entity blinkInterval seems
+    // to have a delay between them since initialisation
+    // is taking some time
     if(millis() - blinkTimer >= blinkInterval) {
         blinkTimer = millis();
 
         for(int i = 0; i < numEnemies; i++) {
             if(enemy[i].isAlive()){
-                enemy[i].setVisible(enemyVisible);
+                enemy[i].setVisible(enemiesVisible);
             }
             else{
                 enemy[i].setVisible(false);
             }
         }
-        enemyVisible = !enemyVisible;
+        enemiesVisible = !enemiesVisible;
     }
+    // process enemies
     for(int i = 0; i < numEnemies; i++){
+        // skip dead enemies
         if(enemy[i].isAlive() == false){
             continue;
         }
+        // check if enemy is on the same spot as the bomb explosionRadius
         if(bomb != nullptr && bomb->getExplosionStart() != 0){
             byte bombX = bomb->getX();
             byte bombY = bomb->getY();
             byte enemyX = enemy[i].getX();
             byte enemyY = enemy[i].getY();
+
+            // bomb killed enemy
             if((bombX == enemyX && bombY == enemyY)||
             (bombX == enemyX && bombY > enemyY - explosionRadius && bombY < enemyY + explosionRadius)||
             (bombY == enemyY && bombX > enemyX - explosionRadius && bombX < enemyX + explosionRadius)){
@@ -84,9 +82,15 @@ void enemiesHandler(){
                 continue;
             }
         }
-        if(enemy[i].isOnSameSpot()){
+
+        // enemy killed player
+        if(enemy[i].isOnSameSpotAsPlayer()){
             endGame();
         }
+
+        // enemies on the same spot -> choose a random direction
+        // still a small chance that they will remain on the same spot
+        // and direction will be chosen again
         for(int j = 0; j < numEnemies; j++){
             if(i != j){
                 if(enemy[i].getX() == enemy[j].getX() && enemy[i].getY() == enemy[j].getY()){
@@ -94,10 +98,36 @@ void enemiesHandler(){
                 }
             }
         }
+        // move enemy
         enemy[i].pathfind();
     }
 }
 
+void initEEPROM() {
+    soundEnabled = EEPROM.read(soundEnabledAddress) & 0x01;
+        
+    matrixBrightness = EEPROM.read(matrixBrightnessAddress);
+    if(matrixBrightness > maxMatrixBrightness || matrixBrightness < minMatrixBrightness){
+        matrixBrightness = maxMatrixBrightness;
+    }
+    matrix.setBrightness(map(matrixBrightness, minMatrixBrightness, maxMatrixBrightness, minInput, maxInput));
+
+    LCDBrightness = EEPROM.read(LCDBrightnessAddress);
+    if(LCDBrightness > maxLCDBrightness || LCDBrightness < minLCDBrightness){
+        LCDBrightness = maxLCDBrightness;
+    }
+    display.setBrightness(map(LCDBrightness, minLCDBrightness, maxLCDBrightness, minInput, maxInput));
+}
+
+bool isPlayerOnBomb(){
+    if (bomb == nullptr) {
+        return false;
+    }
+    if (player.getX() == bomb->getX() && player.getY() == bomb->getY()) {
+        return true;
+    }
+    return false;
+}
 
 void updateGame() {
     player.blink();

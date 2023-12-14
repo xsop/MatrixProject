@@ -40,6 +40,16 @@ void Controller::updateMenu() {
     lastJoystickButtonState = getJoystickButtonRead();
 
     if(menuSwitch == 5){
+
+        if(cursorPos + pagePos == 1){
+            fullMatrixOn();
+            matrix.setBrightness(currentValue);
+        }
+
+        if(cursorPos + pagePos == 0){
+            display.setBrightness(currentValue);
+        }
+
         if(isNextMoveAvailable(adaptiveMenuDelay)){
             if(getDirection() == RIGHT_DIRECTION){
                 if(currentValue < maxInput){
@@ -90,7 +100,7 @@ void Controller::updateMenu() {
     else if(menuSwitch == 3){
         if(isNextMoveAvailable(adaptiveMenuDelay)){
             if(getDirection() == RIGHT_DIRECTION){
-                if(currentValue < aboutTextLength - 1 - 16){
+                if(currentValue < aboutTextLength - numDisplayRows){
                     currentValue++;
                     changePrint = true;
                     adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);
@@ -113,7 +123,7 @@ void Controller::updateMenu() {
     else if(menuSwitch == 4){
         if(isNextMoveAvailable(adaptiveMenuDelay)){
             if(getDirection() == RIGHT_DIRECTION){
-                if(currentValue < howToPlayTextLength - 1 - 16){
+                if(currentValue < howToPlayTextLength - 16){
                     currentValue++;
                     changePrint = true;
                     adaptiveMenuDelay = max(adaptiveMenuDelay * adaptiveMoveDelayMultiplier, 100);

@@ -35,7 +35,7 @@ public:
     void pathfind();
 
     bool isOutOfBounds(byte x, byte y) const;
-    bool isOnSameSpot() const;
+    bool isOnSameSpotAsPlayer() const;
 
     void setVisible(bool visible);
     

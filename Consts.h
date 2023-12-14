@@ -38,22 +38,9 @@ const int joystickMaxCenterThreshold = 700;
 const int moveDelay = 100;
 const int menuDelay = 350;
 
-int adaptiveMoveDelay = 100;
-int adaptiveMenuDelay = 350;
-
-float adaptiveMoveDelayMultiplier = 0.7;
+const float adaptiveMoveDelayMultiplier = 0.7;
 
 const int debounceDelay = 50;
-
-//percentage not totally accurate
-//it fills the map with walls until it reaches the percentage
-//and removes walls in player spawn area
-//if it spawns a wall on the player, it will be removed
-//therefore the percentage will be lower
-const int wallPercentage = 1;
-
-int matrixBrightness = 2;
-int LCDBrightness = 255;
 
 const byte minInput = 0;
 const byte maxInput = 15;
@@ -67,3 +54,11 @@ const int matrixBrightnessAddress = 321;
 const int LCDBrightnessAddress = 896;
 const int soundEnabledAddress = 899;
 
+const byte numDisplayRows = 16;
+
+const byte maxLCDBrightness = 255;
+const byte minLCDBrightness = 0;
+const byte maxMatrixBrightness = 15;
+const byte minMatrixBrightness = 0;
+
+const byte numEnemies = 2;

@@ -11,9 +11,7 @@ byte menuSwitch = 0;
 byte maxPos = 3;
 byte currentValue = 0;
 char currentChar = 'a';
-bool isInGameOver = false;
-bool isInNewScore = false;
-bool isInInputName = false;
 
+void setMenu(struct MenuStruct menuStruct); // Added 'struct' before MenuStruct
 void menu();
 void menuUpdate();

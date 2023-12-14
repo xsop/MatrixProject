@@ -5,7 +5,7 @@ Entity::Entity() {
 }
 
 void Entity::blink() {
-    if(areEntitiesOnSameSpot()) {
+    if(isPlayerOnBomb()) {
         // blink faster if player is on top of bomb
         // by having the same blink interval on both
         // the bomb and the player will blink at the same time
@@ -160,7 +160,7 @@ bool Enemy::isOutOfBounds(byte x, byte y) const {
     return false;
 }
 
-bool Enemy::isOnSameSpot() const {
+bool Enemy::isOnSameSpotAsPlayer() const {
     if(player.getX() == x && player.getY() == y) {
         
         return true;

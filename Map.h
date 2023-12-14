@@ -19,4 +19,4 @@ private:
 
 Bomb* bomb = nullptr;
 
-bool areEntitiesOnSameSpot();
+bool isPlayerOnBomb();

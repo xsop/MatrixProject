@@ -1,53 +1,57 @@
 #include "Menu.h"
 
-void menu(){
+struct MenuStruct {
+    bool changePrint;
+    byte menuSwitch;
+    byte cursorPos;
+    byte pagePos;
+    byte maxPos;
+    byte currentValue;
+};
 
+void setMenu(struct MenuStruct menuStruct){
+    changePrint = menuStruct.changePrint;
+    menuSwitch = menuStruct.menuSwitch;
+    cursorPos = menuStruct.cursorPos;
+    pagePos = menuStruct.pagePos;
+    maxPos = menuStruct.maxPos;
+    currentValue = menuStruct.currentValue;
+}
+
+MenuStruct menuStruct[] = {
+    {true, 0, 0, 0, 3, 0}, //main
+    {true, 1, 0, 0, 1, 0}, //highscores
+    {true, 2, 0, 0, 3, 0}, //settings
+    {true, 3, 0, 0, 0, 0}, //about
+    {true, 4, 0, 0, 1, 0}, //how to play
+    {true, 5, 0, 0, 0, 0}, //value input
+    {true, 6, 0, 0, 0, 0}, //game over
+    {true, 7, 0, 0, 0, 0}, //show highscore
+};
+void menu(){
     byte index = cursorPos + pagePos;
+    Serial.println(index);
     if(menuSwitch == 0){ //main
         if(index == 0){
             startGame();
             isInGame = true;
         }
         else if(index == 1){ //highscores
-            changePrint = true;
-            menuSwitch = 1;
-            cursorPos = 0;
-            pagePos = 0;
-            maxPos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[index]);
         }
         else if(index == 2){ //settings
-            changePrint = true;
-            menuSwitch = 2;
-            cursorPos = 0;
-            pagePos = 0;
-            maxPos = 3;
-            currentValue = 0;
+            setMenu(menuStruct[index]);
         }
         else if(index == 3){ //about
-            changePrint = true;
-            menuSwitch = 3;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[index]);
         }
         else if(index == 4){ //how to play
-            changePrint = true;
-            menuSwitch = 4;
-            maxPos = 0;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[index]);
         }
     }
     else if(menuSwitch == 1){ //highscores
         if(index == 1){
-            changePrint = true;
-            menuSwitch = 0;
-            maxPos = 3;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[0]);
         }
         
     }
@@ -69,90 +73,56 @@ void menu(){
         }
         else if(index == 3){
             resetHighscores();
-            changePrint = true;
-            menuSwitch = 2;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[index]);
         }
         else if(index == 4){
-            changePrint = true;
-            menuSwitch = 0;
-            maxPos = 3;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[0]);
         }
     }
     else if(menuSwitch == 3){ //about
-        changePrint = true;
-        menuSwitch = 0;
-        maxPos = 3;
-        cursorPos = 0;
-        pagePos = 0;
-        currentValue = 0;
+        setMenu(menuStruct[0]);
     }
     else if(menuSwitch == 4){ //how to play
         if(index == 1){
-            changePrint = true;
-            menuSwitch = 0;
-            maxPos = 3;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[0]);
         }
     }
     else if(menuSwitch == 5){ //value input
         changePrint = true;
         menuSwitch = 2;
+        cursorPos = 0;
+        pagePos = 0;
         if(index == 0){
             display.setBrightness(currentValue);
         }
         else if(index == 1){
+            matrix.setupMatrix();
             matrix.setBrightness(currentValue);
         }
-        cursorPos = 0;
-        pagePos = 0;
         currentValue = 0;
     }
     else if(menuSwitch == 6){ //game over
         changePrint = true;
         if(getHighscorePos() < 3){
             Serial.println(getHighscorePos());
-            menuSwitch = 7;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
+            setMenu(menuStruct[7]);
         }
         else{
-            menuSwitch = 0;
-            cursorPos = 0;
-            pagePos = 0;
-            currentValue = 0;
-            maxPos = 3;
+            setMenu(menuStruct[0]);
         }
         
     }
     else if(menuSwitch == 7){ //show highscore
-        changePrint = true;
-        menuSwitch = 8;
-        cursorPos = 0;
-        pagePos = 0;
-        maxPos = 1;
-        currentValue = 0;
+        setMenu(menuStruct[8]);
         isHorizontal = true;
     }
     else if(menuSwitch == 8){ //input name
         saveHighscores();
-        changePrint = true;
-        menuSwitch = 0;
-        cursorPos = 0;
-        pagePos = 0;
+        setMenu(menuStruct[0]);
         inputName[0] = 'a';
         inputName[1] = 'a';
         inputName[2] = 'a';
-        maxPos = 3;
-        currentValue = 0;
+
         isHorizontal = false;
     }
 }

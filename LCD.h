@@ -24,3 +24,9 @@ public:
 
     LiquidCrystal lcd = LiquidCrystal(rs, en, d4, d5, d6, d7);
 };
+
+char* aboutText = "by Stefan Paun: github.com/xsop";
+const byte aboutTextLength = strlen(aboutText);
+
+char* howToPlay = "Place bombs by pressing the button, move with the joystick, kill enemies fast for a highscore.";
+const byte howToPlayTextLength = strlen(howToPlay);
