@@ -55,5 +55,5 @@ void resetHighscores(){
 }
 
 void updateScore(){
-    currentScore += maxScorePerEnemy - min(maxScorePerEnemy, map((millis() - startGameTime), 0, 120000, 0, maxScorePerEnemy));
+    currentScore += maxScorePerEnemy - min(maxScorePerEnemy, map((millis() - startGameTime), 0, maxTimeForScore, 0, maxScorePerEnemy));
 }
