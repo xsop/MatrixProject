@@ -71,5 +71,3 @@ const byte minMatrixBrightness = 0;
 
 const byte maxNumEnemies = 7;
 const byte minNumEnemies = 1;
-
-const int maxTimeForScore = 120000;
