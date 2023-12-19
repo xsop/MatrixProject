@@ -14,9 +14,7 @@
 
 This project brings the popular Bomberman game to life on an LED matrix using Arduino. It combines hardware and software to create a fun and interactive gaming experience. The game features include player movement, bomb placement, and enemy interaction, among others.
 
-<video width="200" loop autoplay controls>
-    <source src="src/gameplay.mp4" type="video/mp4">
-</video>
+![](src/gameplay.gif)
 
 ## Components
 
