@@ -95,7 +95,9 @@ void Display::printGameOver(){
     lcd.setCursor(0, 0);
     lcd.print("GAME OVER         ");
     lcd.setCursor(0, 1);
-    lcd.print("                 ");
+    lcd.print("Score: ");
+    lcd.print(currentScore);
+    lcd.print("      ");
 }
 
 void Display::printNewScore(){
